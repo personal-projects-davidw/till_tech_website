@@ -50,3 +50,7 @@ def contact():
     else:
         flash("Contact details submitted our team will be in touch shortly!")
         return redirect("/")
+
+
+if __name__ == '__main__':
+    app.run()
