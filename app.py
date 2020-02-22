@@ -1,7 +1,23 @@
 from flask import Flask, flash, redirect, render_template, request
+from flask_mail import Mail, Message
 
 # Configure application
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = None
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEBUG'] = False
+app.config['MAIL_USERNAME'] = None
+app.config['MAIL_PASSWORD'] = None
+app.config['MAIL_DEFAULT_SENDER'] = 'autotilltech@gmail.com'
+app.config['MAIL_MAX_EMAILS'] = 2
+app.config['MAIL_SUPPRESS_SEND'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
+
+mail = Mail(app)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -48,6 +64,18 @@ def contact():
 
     # method is POST so form submitted
     else:
+        cus_bus = request.form.get("business")
+        cus_first = request.form.get("firstname")
+        cus_last = request.form.get("lastname")
+        cus_phone = request.form.get("phone")
+        cus_email = request.form.get("email")
+        cus_message = request.form.get("message")
+
+        msg = Message('New Till Tech Customer Query',
+                      recipients=[])
+        msg.body = f"{cus_first} {cus_last} says: {cus_message}. Please email: {cus_email} or call {cus_phone}."
+        mail.send(msg)
+
         flash("Contact details submitted our team will be in touch shortly!")
         return redirect("/")
 

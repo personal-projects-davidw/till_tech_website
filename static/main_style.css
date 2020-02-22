@@ -2,9 +2,6 @@
 body {
     margin: auto 0;
     font-family: sans-serif;
-
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 
 .zone {
@@ -40,9 +37,8 @@ li {
     padding: 10px;
 }
 
-.container {
+.main-content {
     padding-top: 80;
-    margin: inherit;
     background-size: cover;
     background-image: url('epos-sketch.jpg');
     width: 100%;
